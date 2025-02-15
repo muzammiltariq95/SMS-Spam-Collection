@@ -16,3 +16,4 @@ yelp['text length'] = yelp['text'].apply(len)
 
 g = sns.FacetGrid(yelp,col='stars')
 g.map(plt.hist,'text length')
+plt.show()
