@@ -58,3 +58,19 @@ from sklearn.metrics import confusion_matrix,classification_report
 print(confusion_matrix(y_test,predictions))
 print('\n')
 print(classification_report(y_test,predictions))
+
+from sklearn.feature_extraction.text import  TfidfTransformer
+from sklearn.pipeline import Pipeline
+
+pipeline = Pipeline([
+    ('bow', CountVectorizer()),  # strings to token integer counts
+    ('tfidf', TfidfTransformer()),  # integer counts to weighted TF-IDF scores
+    ('classifier', MultinomialNB()),  # train on TF-IDF vectors w/ Naive Bayes classifier
+])
+
+X = yelp_class['text']
+y = yelp_class['stars']
+X_train, X_test, y_train, y_test = train_test_split(X, y,test_size=0.3,random_state=101)
+
+# May take some time
+pipeline.fit(X_train,y_train)
